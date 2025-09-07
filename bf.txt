@@ -1,0 +1,169 @@
+package com.example.sharedpreferences;
+
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Button;
+import android.widget.Toast;
+
+public class MainActivity extends AppCompatActivity {
+    EditText username,num,mail,pass1,pass2;
+    Button submit;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        username = (EditText) findViewById(R.id.username);
+        num = (EditText) findViewById(R.id.number);
+        mail = (EditText) findViewById(R.id.email);
+        pass1 = (EditText) findViewById(R.id.password);
+        pass2 = (EditText) findViewById(R.id.conpassword);
+        submit = (Button) findViewById(R.id.loginbth);
+        sharedPreferences = getSharedPreferences("UserDetails",MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String usernames = username.getText().toString().trim();
+                int mobilenums = Integer.parseInt(num.getText().toString().trim());
+                String emails = mail.getText().toString().trim();
+                String pass1s = pass1.getText().toString().trim();
+                String pass2s = pass2.getText().toString().trim();
+
+                if (usernames.isEmpty()) {
+                    username.setError("username is empty");
+                    username.requestFocus();
+                    return;
+                }
+                if (emails.isEmpty()) {
+                    mail.setError("email is empty");
+                    mail.requestFocus();
+                    return;
+                }
+                if (pass1s.isEmpty()) {
+                    pass1.setError("enter the password");
+                    pass1.requestFocus();
+                    return;
+                }
+                if (pass1s.length()<6) {
+                    pass1.setError("Length must be 6 characters.");
+                    pass1.requestFocus();
+                    return;
+                }
+                if (!pass1s.equals(pass2s)) {
+                    pass2.setError("Password not matched");
+                    pass2.requestFocus();
+                    return;
+                }
+                Toast.makeText(MainActivity.this,"registeration succesful",Toast.LENGTH_LONG).show();
+                editor.putString("keyusername", usernames);
+                editor.putInt("keymobile", mobilenums);
+                editor.putString("keyemail", emails);
+                editor.putString("keypassword", pass2s);
+                editor.apply();
+            }
+        });
+    }
+
+
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginBottom="50dp"
+        android:gravity="center"
+        android:text="MES COLLEGE OF ENGINEERING"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:background="@color/design_default_color_primary_variant"
+        android:textColor="@color/white" />
+    <EditText
+        android:id="@+id/username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
+        android:layout_marginTop="1dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="#eeccff"
+        android:drawableLeft="@drawable/baseline_person_24"
+        android:hint=" username"
+        android:padding="20dp" />
+    <EditText
+        android:id="@+id/number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/username"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="#eeccff"
+        android:drawableLeft="@drawable/baseline_local_phone_24"
+        android:hint=" number"
+        android:padding="20dp"/>
+    <EditText
+        android:id="@+id/email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/number"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="#eeccff"
+        android:drawableLeft="@drawable/baseline_email_24"
+        android:hint=" email"
+        android:padding="20dp"/>
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/email"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="#eeccff"
+        android:drawableLeft="@drawable/baseline_password_24"
+        android:hint=" password"
+        android:padding="20dp"/>
+    <EditText
+        android:id="@+id/conpassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/password"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="#eeccff"
+        android:drawableLeft="@drawable/baseline_password_24"
+        android:hint=" confirm password"
+        android:padding="20dp"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/loginbth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/conpassword"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="SUBMIT" />
+
+</RelativeLayout>
+}
