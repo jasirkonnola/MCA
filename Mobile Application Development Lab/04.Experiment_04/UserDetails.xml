@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8' standalone='yes' ?>
+<map>
+    <string name="keyemail">jasir@12345</string>
+    <string name="keyusername">jasir</string>
+    <string name="keypassword">12345qwer</string>
+    <int name="keumobile" value="12345678" />
+</map>
