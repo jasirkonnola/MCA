@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8' standalone='yes' ?>
+<map>
+    <string name="password">12345678</string>
+    <string name="gender"> Male</string>
+    <string name="subjects">Mathematics, Science, History, English</string>
+    <string name="name">jasir</string>
+    <string name="rollno">23</string>
+    <string name="email">jsir@gmail.com</string>
+</map>
