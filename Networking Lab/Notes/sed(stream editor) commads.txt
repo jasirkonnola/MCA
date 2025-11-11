@@ -1,0 +1,12 @@
+sed '3d' file.txt     -----> delete a spefic line in the file 
+sed '$d' file.txt     -----> delete the last line in the file
+sed -n "${starting},${ending}p" "$filename" -----> extract lines from file one range to another.
+sed -i 's/oldword/newword/g' filename -----> permanently replace the word
+sed -i "${line_number}d" "filename" -----> delete the specific line permanently
+sed "${line_number}s/.*/${newline}/" "filename" -----> replace a line
+sed -i '${starting},${ending}d' filename
+sed -i 's/<what you delete>//g' filename -----> delete a specfic letter or numbers eg:- letter , [0-9] to delete all numbers
+sed -i "/\<what you want>$/a $l" $file -----> what you to append 
+          eg:-
+            sed -i "/\$/a $l" $file  -------> here the word will append after all end of line
+            sed -i "/\.$/a $l" $file  -------> here the word will append after all end of "."
