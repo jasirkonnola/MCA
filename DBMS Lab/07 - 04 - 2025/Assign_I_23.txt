@@ -1,0 +1,77 @@
+-- 
+-- Roll No: 23
+-- Name: Jasir Hassan K
+-- Program: Assignment - I
+-- 
+
+
+--
+-- Table structure for table books
+--
+
+CREATE TABLE books (accno INT PRIMARY KEY AUTO_INCREMENT,title VARCHAR(100) NOT NULL UNIQUE,author VARCHAR(50) NOT NULL,price FLOAT(6,2),type ENUM('lending','reference'),availability ENUM('yes','no'),publisherid INT);
+ALTER TABLE books ADD CONSTRAINT  books_fkey_publisherid foreign key(publisherid) references publishers(publisherid);
+
+--
+-- Table structure for table publishers
+--
+
+CREATE TABLE publishers(publisherid INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(50) UNIQUE NOT NULL, address VARCHAR(100));
+
+--
+-- Table structure for table members
+--
+
+CREATE TABLE members(memberid INT PRIMARY KEY AUTO_INCREMENT,name VARCHAR(50) NOT NULL, address VARCHAR(100), type ENUM('staff','student'));
+
+--
+-- Table structure for table issues
+--
+
+CREATE TABLE issues( issueid INT PRIMARY KEY AUTO_INCREMENT, memberid INT, accno INT,issuedate DATE, duedate DATE);
+ALTER TABLE issues ADD CONSTRAINT issues_fkey_accno FOREIGN KEY(accno) REFERENCES books(accno);
+ALTER TABLE issues ADD CONSTRAINT issues_fkey_memberid FOREIGN KEY(memberid) REFERENCES members(memberid);
+--
+-- Table structure for table returns
+--
+
+CREATE TABLE returns(returnid INT PRIMARY KEY AUTO_INCREMENT, memberid INT, accno INT, returndate DATE, fine INT DEFAULT 0 CHECK(fine >= 0));
+ALTER TABLE returns ADD CONSTRAINT  returns_fkey_accno FOREIGN KEY(accno) REFERENCES books(accno);
+ALTER TABLE returns ADD CONSTRAINT  returns_fkey_memberid FOREIGN KEY(memberid) REFERENCES members(memberid);
+
+--
+-- Dumping data for table books
+--
+
+INSERT INTO books(title,author,price,type,availability,publisherid)VALUES('The Adventure of Tom Sawyer','Mark Twain',99.99,'lending','yes',1),('Treasure Island','Robert Louis',79.99,'reference','no',2),('Pride and Prejudice','Jane Austen',69.99,'lending','yes',3),('One Piece','Eiichrio Oda',99.99,'lending','yes',5),('Bleach','Tite Kubo',49.99,'lending','no',4);
+
+--
+-- Dumping data for table publishers
+--
+
+INSERT INTO publishers(name,address)VALUES('Offices Books','Shahapur Jat,New Dehli'),('Times Classic','bheen Ghali,Dehli'),('Candid Book World','University Road Jammu'),('Frontpage','Kolkatta'),('Book Bank(India)','Geeta, Delhi');
+
+--
+-- Dumping data for table members
+--
+
+INSERT INTO members (name, address, type) VALUES('Fasil', 'Kochi', 'student'),('Krishnan', 'Thiruvananthapuram', 'staff'),('Vishnu', 'Kozhikode', 'student'),('Raj', 'Thrissur', 'staff'),('Varma', 'Kannur', 'student');
+
+--
+-- Dumping data for table issues
+--
+
+INSERT INTO issues(memberid,accno,issuedate,duedate) VALUES(1,2,'2024-01-12','2024-01-14'),(2,3,'2025-02-02','2025-02-02'),(3,3,'2024-12-15','2025-01-03'),(1,4,'025-01-01','2025-01-05'),(4,5,'2025-03-15','2025-03-25');
+
+--
+-- Dumping data for table returns
+--
+
+INSERT INTO returns(memberid,accno,returndate,fine) VALUES(1,2,'2024-12-12',0),(2,3,'2025-02-02',100),(4,3,'2025-03-02',500),(2,5,'2023-12-02',100),(5,1,'2024-04-15',0);
+
+--
+-- SQl Query Statements
+--
+
+-- -----SQL query statments preceeded by the its question-------- # This line may be removed in the actual file
+-- -----Question number should be commented---------------#This line may be removed in the actual file

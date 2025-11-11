@@ -1,0 +1,167 @@
+AWK Command: A Detailed Guide
+
+AWK is a powerful programming language primarily used for text processing and data manipulation. It is especially useful for extracting data from files, generating reports, and performing calculations.
+Purpose:
+
+AWK is typically used for:
+
+    Manipulating data
+
+    Generating reports
+
+    Filtering and formatting text files
+
+    Performing calculations
+
+Syntax:
+
+awk 'pattern { action }' filename
+
+    pattern: A condition or expression that must be matched for the action to be executed.
+
+    action: What AWK should do when the pattern is matched (often printing or processing fields).
+
+    filename: The file to process.
+
+Examples:
+1. Print All Lines:
+
+To print all lines in a file:
+
+awk '{print}' filename
+
+This will print every line in the file.
+2. Print Lines Containing a Specific Word:
+
+To print lines that contain the word "word":
+
+awk '/word/ {print}' filename
+
+This searches for the word "word" and prints the matching lines.
+Built-in Variables in AWK:
+
+    NR – Number of records (i.e., line number).
+    This variable tracks the number of lines AWK has processed.
+
+    NF – Number of fields in the current record (line).
+    This tells you how many fields (columns) exist in the current line.
+
+    FS – Field Separator.
+    Specifies the delimiter used to separate fields in each line. The default is whitespace (spaces or tabs).
+
+Common Use-Cases & Examples:
+1. Print Line Numbers Along with Content:
+
+To print all lines with their respective line numbers:
+
+awk '{print NR, $0}' filename
+
+    NR prints the line number.
+
+    $0 represents the entire line.
+
+2. Print Specific Columns:
+
+To print the first and fourth columns of a file:
+
+awk '{print $1, $4}' filename
+
+    $1 refers to the first column, and $4 refers to the fourth column of each line.
+
+3. Print Lines 3 to 6:
+
+To print lines between lines 3 and 6:
+
+awk 'NR >= 3 && NR <= 6 {print NR, $0}' filename
+
+    NR >= 3 && NR <= 6 ensures that lines 3 through 6 are printed.
+
+4. Count Total Lines in a File:
+
+To count the number of lines in the file:
+
+awk 'END {print NR}' filename
+
+    The END block is executed after AWK processes all lines, so it prints the total number of lines (NR).
+
+5. Print Lines Longer than 10 Characters:
+
+To print lines that are longer than 10 characters:
+
+awk 'length($0) > 10' filename
+
+    length($0) returns the length of the entire line ($0), and if it's greater than 10, the line will be printed.
+
+Using AWK for Calculations:
+6. Print the Square of Numbers:
+
+To print the square of numbers from 1 to 6:
+
+awk 'BEGIN {for(i=1;i<=6;i++) print "square of", i, "is", i*i }'
+
+    The BEGIN block is executed before processing any input file, so this loop prints the squares of numbers from 1 to 6.
+
+Advanced Examples:
+7. Print the Sum of All Numbers in a Column:
+
+To calculate the sum of all numbers in the second column:
+
+awk '{sum += $2} END {print sum}' filename
+
+    The sum += $2 part adds the value in the second column to the sum variable for each line.
+
+    The END block prints the total sum after processing all lines.
+
+8. Print All Lines Where the Value in Column 3 is Greater than 50:
+
+awk '$3 > 50 {print $0}' filename
+
+    This filters lines where the value in the third column is greater than 50 and prints them.
+
+9. Print Lines Where Column 2 Equals "Completed":
+
+awk '$2 == "Completed" {print $0}' filename
+
+    This will print all lines where the second column equals "Completed".
+
+Summary of Key Features:
+
+    AWK's Key Built-in Variables:
+
+        NR: The number of records (lines) processed so far.
+
+        NF: The number of fields in the current record.
+
+        FS: The field separator, defaulting to whitespace.
+
+    Actions:
+
+        {print}: Prints the matching record(s).
+
+        {sum += $2}: Accumulates the value of the second column into a sum.
+
+    Conditionals:
+
+        NR == 3: Specifies a condition (like line number).
+
+        $3 > 50: Tests the value in the third column.
+
+        /pattern/: Matches records containing a pattern.
+
+    BEGIN and END Blocks:
+
+        BEGIN: Runs before the file processing begins (useful for initializing variables or printing headers).
+
+        END: Runs after the file processing ends (useful for printing totals or summary information).
+
+Conclusion:
+
+AWK is an extremely versatile and powerful tool for text processing. By combining pattern matching, field manipulation, and conditional logic, you can automate a wide range of tasks such as:
+
+    Extracting data from text files
+
+    Performing calculations (e.g., summing columns, averaging values)
+
+    Formatting output for reports
+
+Remember that AWK processes the input file line-by-line, and its flexibility with built-in variables and functions makes it an essential tool for system administrators, developers, and data analysts.

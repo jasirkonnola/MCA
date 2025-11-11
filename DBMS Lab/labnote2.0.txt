@@ -1,0 +1,253 @@
+                                                                        17-03-2025
+Aggregate function in my sql
+  funtion that can operate on a set of values and return value
+1.MIN( ) -- returns minimum value in the set
+2.MAX( ) -- returns maximum value in the set 
+          ex:- select min(age) from students;
+3.Avg( ) -- returns an average value of the set
+4.sum( ) -- returns sum of set of value
+5.count( ) -- returns total number of rows in that set
+          note:- ignore the 'NULL' value except count function.
+
+
+---------------------------------------------------------------------------------
+6))Group by -- group rows that contains similar values in the attribute provided.
+----------------------------------------------------------------------------------
+Syntax
+    Select <attribute_list> from <table_name> Group by <attribute_name>
+
+Q)count the number of students in each department
+select count(*) 
+from students 
+Group by dno;
++----------+
+| count(*) |
++----------+
+|        3 |
+|        4 |
+|        3 |
++----------+
+
+rename count to total no.of students
+select count(*) as total_no_0f_students from students Group by dno;
++----------------------+
+| total_no_0f_students |
++----------------------+
+|                    3 |
+|                    4 |
+|                    3 |
++----------------------+
+
+Q)get total number of students
+select count(*) as total_no_0f_students from students;
++----------------------+
+| total_no_0f_students |
++----------------------+
+|                   10 |
++----------------------+
+
+Q)get total number of books
+select count(*) as total_no_0f_books from books;
++-------------------+
+| total_no_0f_books |
++-------------------+
+|                10 |
++-------------------+
+
+Q)find the average price of books
+select avg(price) as avg_price from books;
++------------+
+| avg_price  |
++------------+
+| 734.897000 |
++------------+
+
+Q)find the most expensive and cheapest book
+select min(price) as min_price,max(price) as max_price from books;
++-----------+-----------+
+| min_price | max_price |
++-----------+-----------+
+|    100.00 |   2000.00 |
++-----------+-----------+
+
+Q)count the total number of book issued
+select count(distinct bookid) as books_issused from bookissues;
++---------------+
+| books_issused |
++---------------+
+|             8 |
++---------------+
+
+Group by>>
+Q)count how many books each student has issuesd (include student name,total number of books)
+
+select bookissues.id,count(bookid) as total_no_of_books from bookissues group by id;
++------+-------------------+
+| id   | total_no_of_books |
++------+-------------------+
+|  101 |                 2 |
+|  102 |                 3 |
+|  103 |                 4 |
+|  104 |                 1 |
+|  105 |                 2 |
+|  106 |                 1 |
+|  107 |                 1 |
+|  109 |                 1 |
++------+-------------------+
+
+Q)list the book title with the hightest price
+select title,price from books where price =(select max(price) from books);
++-----------------+---------+
+| title           | price   |
++-----------------+---------+
+| cloud computing | 2000.00 |
++-----------------+---------+
+-----------------------------------------------------------------------------------------------------
+
+                                                                            19-03-2025
+7)) Having clause
+syntax:-
+select <attribute_list> from <table_name> Group by <attribute_name> Having <condition>
+
+Q)find department more the 5 students
+select dno,count(studentid) as tottal_no_of_students from students group by dno having count(studentid)>5;
++------+-----------------------+
+| dno  | tottal_no_of_students |
++------+-----------------------+
+|    1 |                     7 |
++------+-----------------------+
+
+here change dno ----> dname
+select dname,count(studentid) as tottal_no_of_students from students inner join departments on students.dno = departments.dno group by dname having count(studentid)>5;
++-------+-----------------------+
+| dname | tottal_no_of_students |
++-------+-----------------------+
+| MCA   |                     7 |
++-------+-----------------------+
+
+group by:-
+Q)count the number of students in the each department
+select departments.dname,count(students.dno) as total_no_of_students from departments inner join students on departments.dno = students.dno group by dname;
++-------+----------------------+
+| dname | total_no_of_students |
++-------+----------------------+
+| MBA   |                    4 |
+| MCA   |                    7 |
+| MTECH |                    4 |
++-------+----------------------+
+
+Q)count how many books each student has issused
+select students.name,count(bookissues.issue_date) as no_of_issued from students inner join bookissues on students.studentid = bookissues.id group by studentid;
++-------------+--------------+
+| name        | no_of_issued |
++-------------+--------------+
+| Midhun K    |            2 |
+| Ann Mariya  |            3 |
+|  Sidharth M |            4 |
+| Jasir       |            1 |
+| layla       |            2 |
+| appu        |            1 |
+| jo          |            1 |
+| dilshad     |            1 |
++-------------+--------------+
+
+Q)find the averge book price pre author
+ select author,avg(price) as avg_price from books group by author;
++---------------------+-------------+
+| author              | avg_price   |
++---------------------+-------------+
+| Ramez Elmasri       |  500.000000 |
+| Silberschatz        |  650.000000 |
+| Andrew S. Tanenbaum |  700.000000 |
+| Cormen              |  100.000000 |
+| Stern               | 1000.000000 |
+| NEW                 |  533.323333 |
+| Isco                |  799.000000 |
+| newman              | 2000.000000 |
++---------------------+-------------+
+
+Q)find the total number of issused per department
+ SELECT departments.dname, COUNT(bookissues.bookid) AS book_count FROM students JOIN departments ON students.dno = departments.dno JOIN bookissues ON students.studentid = bookissues.id GROUP BY departments.dno, departments.dname;
++-------+------------+
+| dname | book_count |
++-------+------------+
+| MBA   |          4 |
+| MCA   |          7 |
+| MTECH |          4 |
++-------+------------+
+
+Q)find the number of issued per day
+
+having :-
+Q)find the students who have issused more than 2 books
+Q)find author who have written more than 3 books
+Q)find the department that have issued atleast 10 books
+------------------------------------------------------------------------------------------------------------------------------------
+                                                                       26-03-2025
+View:-
+Views is a virtual table
+   -> stores only schema
+   -> no value
+        create view <view_name> as(select studentid,name from students)
+-> Security
+-> Easiness
+
+
+create view studentview as(select studentid,name from students);
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select * from studentview;
++-----------+---------------+
+| studentid | name          |
++-----------+---------------+
+|       101 | Midhun K      |
+|       102 | Ann Mariya    |
+|       103 |  Sidharth M   |
+|       104 | Jasir         |
+|       105 | layla         |
+|       106 | appu          |
+|       107 | jo            |
+|       108 | abhi          |
+|       109 | dilshad       |
+|       110 | rax           |
+|       111 | John Doe      |
+|       112 | Jane Smith    |
+|       113 | Tom Brown     |
+|       114 | Emily White   |
+|       115 | Michael Black |
++-----------+---------------+
+
+``````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
+select * from departments inner join students on students.dno = departments.dno inner join bookissues on bookissues.id = students.studentid inner join books on books.bookid = bookissues.bookid;
+
+select distinct * from departments inner join students on students.dno = departments.dno inner join bookissues on bookissues.id = students.studentid inner join books on books.bookid = bookissues.bookid;
+
+select distinct * from departments natural join students inner join bookissues on bookissues.id = students.studentid natural join books ;
+
+create view studentinfo as(select * from departments natural join students inner join bookissues on bookissues.id = students.studentid natural join books);
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select * from studentinfo;
++--------+-----+-------+-----------+-------------+------+------+------------+-------------+---------------------------+---------------------+---------+
+| bookid | dno | dname | studentid | name        | age  | id   | issue_date | return_date | title                     | author              | price   |
++--------+-----+-------+-----------+-------------+------+------+------------+-------------+---------------------------+---------------------+---------+
+|      6 |   3 | MBA   |       105 | layla       |   25 |  105 | 2025-01-12 | NULL        | ADV DBMS                  | NEW                 |  499.99 |
+|      6 |   3 | MBA   |       105 | layla       |   25 |  105 | 2025-03-23 | 2025-03-25  | ADV DBMS                  | NEW                 |  499.99 |
+|      8 |   3 | MBA   |       107 | jo          |   24 |  107 | 2025-02-20 | NULL        | ADV X                     | NEW                 |  599.99 |
+|      1 |   3 | MBA   |       109 | dilshad     |   22 |  109 | 2025-03-01 | NULL        |  Database Systems         | Ramez Elmasri       |  500.00 |
+|      1 |   1 | MCA   |       101 | Midhun K    |   21 |  101 | 2024-02-16 | 2024-02-22  |  Database Systems         | Ramez Elmasri       |  500.00 |
+|      2 |   1 | MCA   |       101 | Midhun K    |   21 |  101 | 2024-02-22 | 2024-02-24  | Operating System Concepts | Silberschatz        |  650.00 |
+|      4 |   1 | MCA   |       103 |  Sidharth M |   21 |  103 | 2024-03-01 | 2024-03-05  | Algorithms                | Cormen              |  100.00 |
+|      5 |   1 | MCA   |       103 |  Sidharth M |   21 |  103 | 2025-03-01 | 2025-03-02  | Turbo C++                 | Stern               | 1000.00 |
+|      5 |   1 | MCA   |       103 |  Sidharth M |   21 |  103 | 2025-03-02 | 2025-03-03  | Turbo C++                 | Stern               | 1000.00 |
+|      7 |   1 | MCA   |       103 |  Sidharth M |   21 |  103 | 1999-09-09 | 2000-02-20  | ADV OP                    | NEW                 |  499.99 |
+|      7 |   1 | MCA   |       106 | appu        |   24 |  106 | 2025-01-13 | NULL        | ADV OP                    | NEW                 |  499.99 |
+|      3 |   2 | MTECH |       102 | Ann Mariya  |   30 |  102 | 2024-02-19 | 2024-02-20  | Computer Networks         | Andrew S. Tanenbaum |  700.00 |
+|      2 |   2 | MTECH |       102 | Ann Mariya  |   30 |  102 | 2024-04-01 | 2024-04-20  | Operating System Concepts | Silberschatz        |  650.00 |
+|      8 |   2 | MTECH |       102 | Ann Mariya  |   30 |  102 | 2002-12-30 | 2003-01-01  | ADV X                     | NEW                 |  599.99 |
+|      5 |   2 | MTECH |       104 | Jasir       |   22 |  104 | 2024-06-17 | NULL        | Turbo C++                 | Stern               | 1000.00 |
++--------+-----+-------+-----------+-------------+------+------+------------+-------------+---------------------------+---------------------+---------+
+
+``````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
+
+

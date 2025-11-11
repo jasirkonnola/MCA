@@ -1,0 +1,131 @@
+i. to copy a file.
+ii. Use head and tail to print lines in a particular range in a file.
+iii. to create a blank new file and make it executable.
+iv. Delete a file
+v. To search for a particular pattern
+
+cp source_file destination_file
+head -n end_line filename | tail -n count
+cat new_file
+chmod +x new_file
+rm filename
+grep "pattern" filename
+-----------------------------------------
+i. view the first lines of any text file.
+ii. revoke the write and execute permission for a file hello.txt
+iii. create a directory ABC and make it only readable.
+iv. Move the file copy.txt to the name copy2.txt
+v. To display contents of a file
+
+head -n 10 filename.txt
+chmod -wx hello.txt
+mkdir ABC   chmod +r ABC
+mv copy.txt copy2.txt
+cat filename.txt
+----------------------------------------------
+i. Evaluate an expression 30 + 40
+ii. lists all the contents of the specified file
+iii. copy one file to another
+iv. create a file exercise.txt and make it executable
+v. print a specific character in a file
+
+echo $((30 + 40))
+cat filename.txt
+cp source.txt destination.txt
+cat exercise.txt chmod +x exercise.txt
+----------------------------------------
+i. Find out the path of the current working directory
+pwd
+ii. list all the files with details 
+ls -l
+iii. view the last lines of any text file. 
+tail -n 10 filename
+iv. command to create a blank new file 
+cat filename
+v. Delete a file
+rm filename
+-------------------------------
+i. to view the first lines of any text file.
+ii. remoke the read, write, and execute permission for a file new.txt
+iii. delete a directory
+iv. Copy a file
+v. Search for a specific pattern
+
+head -n 10 filename.txt
+chmod 000 new.txt // chmod a-rwx new.txt
+rm -r directory_name
+cp source_file destination_file
+grep "pattern" filename.txt
+-----------------------------------
+i. Cut a particular portion of a line
+ii. list all the files with details
+iii. to create a blank new file and make it executable.
+iv. Delete a file
+v. To search a string “hello” from a file
+
+cut -c 5-10 filename.txt
+ls -l
+cat new_file.sh  chmod +x new_file.sh
+rm filename.txt
+grep "hello" filename.txt
+----------------------------------------
+i. Enter your name and display hello with that name.
+ii. Deny the read, write and execute permissions of file abc.txt
+iii. Evaluate 20 * 30
+iv. List your file with details
+v. Join files
+
+read -p "Enter your name: " name  echo "Hello, $name"
+chmod 000 abc.txt
+echo $((20 * 30))
+ls -l
+cat file1.txt file2.txt > merged.txt
+---------------------------------------------
+i. Evaluate an expression 100 + 10
+ii. lists all the contents of the specified file
+iii. copy one file to another
+iv. Deny read permission to all
+v. To search a specific character in a file
+
+echo $((100 + 10))
+cat filename.txt
+cp source.txt destination.txt
+chmod a-r filename.txt
+cut -c position filename.txt
+---------------------------------------------------
+i. Read input from keyboard
+ii. Create a file using cat command
+iii. view the last lines of any text file.
+iv. Copy one file to another
+v. Count number of lines
+
+read -p "Enter your input: " user_input    echo "You entered: $user_input"
+cat > filename.txt
+tail -n 10 filename.txt
+cp source.txt destination.txt
+wc -l filename.txt
+------------------------------------------------------
+i. to view the first lines of any text file.
+ii. change the read, write, and execute permissions of files
+iii. delete a directory
+iv. Copy a file
+v. Search the letter ‘A’ in a file
+
+head -n 10 filename.txt
+chmod a+rwx filename.txt
+rm -r directory_name
+cp source.txt destination.txt
+grep "A" filename.txt
+------------------------------------------------------
+i. Cut a particular portion of a line
+ii. list all the files with details
+iii. to create a blank new file and make it executable.
+iv. Delete a file
+v. To search a string “hello” from a file
+
+cut -c start-end filename.txt
+ls -l
+cat newfile.sh   chmod +x newfile.sh
+rm filename.txt
+grep "hello" filename.txt
+

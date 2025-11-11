@@ -1,0 +1,59 @@
+-- 
+-- Roll No: 23
+-- Name: Jasir Hassan K
+-- Program: Assignment - II
+-- 
+
+
+--
+-- Table structure for table <table_name>
+--
+
+-- ---------create/alter statement commands----------- # This line may be removed in the actual file
+
+--
+-- Dumping data for table <table_name>
+--
+
+-- --------insert/update statement commands----------- # This line may be removed in the actcual file
+
+--
+-- SQl Query Statements
+--
+
+--Q1. Retrieve all members with their name and address. 
+select name,address from members;
+--Q2. Retrieve all books (include only accno and title) containing a letter ‘o’ anywhere in the title.
+select accno, title from books  where title LIKE '%o%';
+--Q3. Retrieve books (include all attributes) that are currently available for lending. 
+select * from books where type = 'lending' and availability = 'yes';
+--Q4. Retrieve all books with their title, author, and corresponding publisher name
+select books.title,books.author,publishers.name as publisher_name from books join publishers on books.publisherid=publishers.publisherid;
+--Q5. Retrieve members who issued books with their name, address, and corresponding book titles in ascending order of title.
+select members.name,members.address,books.title from members join issues on members.memberid=issues.memberid join books on issues.accno=books.accno order by books.title ASC;
+--Q6. Retrieve the name, total number of books (rename it as TotalBooksIssued) issued by each member.
+select members.name, count(issues.accno) as TotalBooksIssued from members join issues on members.memberid=issues.memberid group by members.name;
+--Q7. Retrieve members (include name, address) who have not issued any books.
+select name,address from members where memberid NOT IN(select distinct memberid from issues);
+--Q8. Retrieve all books with their title, author, and the total number of time (rename it as NumberofIssue) each book has been issued.
+select books.title,books.author , count(issues.issueid) as NumberofIssue from books left join issues on books.accno=issues.accno group by books.title,books.author;
+--Q9. Retrieve members (include name, TotalBooksIssued) who have issued more than 2 books.
+select members.name, COUNT(issues.accno) as TotalBooksIssued from members  JOIN issues  on members.memberid = issues.memberid group by members.name HAVING count(issues.accno) > 2;
+--Q10. Retrieve books (include title, author) that have not been issued yet.
+select books.title, books.author from books  where books.accno NOT IN (select DISTINCT accno from issues);
+--Q11. Retrieve the top 5 most issued books (include title, author, TotalIssued).
+select books.title, books.author,count(issues.issueid) as TotalIssued from books join issues on books.accno = issues.accno group by books.title,books.author order by TotalIssued DESC limit 5;
+--Q12. Retrieve the most issued books (include title, author, TotalIssued).
+select books.title, books.author, count(issues.issueid) as totalissued from books join issues on books.accno = issues.accno group by books.title, books.author having count(issues.issueid) = (select max(issuecount) from (select count(issueid) as issuecount from issues group by accno) as subquery);
+--Q13. Retrieve members (include name, issuedate) who issued books before 2023-06-01 and have not returned them yet.
+select members.name, issues.issuedate from members join issues on members.memberid = issues.memberid where issues.issuedate < '2023-06-01' and issues.accno not in (select accno from returns where memberid = issues.memberid);
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,32 @@
+-- 
+-- Roll No: 23
+-- Name:jasir Hassan K
+-- Program: Assignment - II
+-- 
+
+--
+-- SQl Query Statements
+--Q1. Retrieve all members with their name and address. 
+select name,address from members;
+--Q2. Retrieve all books (include only accno and title) containing a letter ‘o’ anywhere in the title.
+select accno,title from books where title like '%o%';
+--Q3. Retrieve books (include all attributes) that are currently available for lending
+select * from books where availability = 'yes' and type = 'lending';
+--Q4. Retrieve all books with their title, author, and corresponding publisher name.
+select books.title,books.author,publishers.name from books join publishers on books.publisherid = publishers.publisherid ;
+--Q5. Retrieve members who issued books with their name, address, and corresponding book titles in ascending order of title
+select members.name,members.address,books.title from members inner join issues on members.memberid = issues.memberid inner join books on issues.accno = books.accno order by books.title asc ;
+--Q6. Retrieve the name, total number of books (rename it as TotalBooksIssued) issued by each member
+select members.name,count(issues.accno) as TotaalBookIssued from members left join issues on members.memberid = issues.memberid group by members.name;
+--Q7. Retrieve members (include name, address) who have not issued any books.
+select members.name,members.address from members inner join issues on members.memberid = issues.memberid where issueid is null;
+--Q8. Retrieve all books with their title, author, and the total number of time (rename it as NumberofIssue) each book has been issued. 
+select books.title,books.author,count(issues.accno) as NumberofIssue from books inner join issues on books.accno = issues.accno group by books.title,books.author;
+--Q9. select members.name,count(issues.accno) as NumberofIssue from members inner join issues on members.memberid = issues.memberid group by members.name having count(issues.accno) > 2;
+select members.name,count(issues.accno) as NumberofIssue from members inner join issues on members.memberid = issues.memberid where issues.accno < 2 group by members.name;
+--Q10. Retrieve books (include title, author) that have not been issued yet. 
+select books.title,books.author from books left join issues on books.accno = issues.accno where issues.accno is null;
+--Q11. Retrieve the top 5 most issued books (include title, author, TotalIssued).
+select books.title,books.author,count(issues.accno) as TotalIssued from books join issues order by TotalIssued desc limit 5;
+-- -----SQL query statments preceeded by the its question-------- # This line may be removed in the actual file
+-- -----Question number should be commented---------------#This line may be removed in the actual file

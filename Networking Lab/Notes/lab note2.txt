@@ -1,0 +1,130 @@
+Q)write a shell script to perform arithmetic operations using switch statement
+
+#!/bin/bash
+
+echo "Enter first number:"
+read n1
+echo "Enter second number:"
+read n2
+
+echo "Choose an operation to perform:"
+echo "1) Addition"
+echo "2) Subtraction"
+echo "3) Multiplication"
+echo "4) Division"
+read choice
+
+case $choice in
+    1) result=$((n1 + n2))
+       echo "Result of addition is $result"
+       ;;
+    2) result=$((n1 - n2))
+       echo "Result of subtraction is $result"
+       ;;
+    3) result=$((n1 * n2))
+
+       echo "Result of multiplication is $result"
+       ;;
+    4) if [ $n2 -ne 0 ]; then
+           result=$((n1 / n2))
+           echo "Result of division is $result"
+       else
+           echo "Division by zero is not allowed"
+       fi
+       ;;
+    *) echo "Invalid option"
+       ;;
+esac
+
+-----------------------------------
+[mca@localhost jasir]$ vi arithematic.sh
+[mca@localhost jasir]$ chmod +x arithematic.sh
+[mca@localhost jasir]$ ./arithematic.sh
+Enter first number:
+0
+Enter second number:
+0
+Choose an operation to perform:
+1) Addition
+2) Subtraction
+3) Multiplication
+4) Division
+1
+Result of addition is 0
+
+
+Q)write a shell script to check wheather the given string is palindrome or not
+
+#!/bin/bash
+
+echo "Enter a string:"
+read s
+rev=$(echo "$s" | rev) 
+echo $rev
+
+if [ "$s" = "$rev" ]; then
+    echo "The string is a palindrome"
+else
+    echo "Not a palindrome"
+fi
+
+Q)write a shell script to for password vaildation
+
+#!/bin/bash
+
+read -p "Enter a password : " ps
+length=${#ps}
+
+if [[ $length -le 8 ]];then
+        echo "The password must atleast 8 characters"
+elif ! [[ $ps =~ [A-Z] ]];then
+        echo "Password should be contain Uppercase letters"
+elif ! [[ $ps =~ [a-z] ]];then
+        echo "Password should be contain Lowercase letters"
+elif ! [[ $ps =~ [0-9] ]];then
+        echo "Password should be contain Numbers"
+elif ! [[ $ps =~ [[:punct:]] ]];then
+        echo "Password should be contain some special characters"
+else
+        echo "Strong Password."
+fi
+
+
+[mca@localhost 07-03-2025]$ chmod +x passwordvali.sh 
+[mca@localhost 07-03-2025]$ vi passwordvali.sh 
+[mca@localhost 07-03-2025]$ ./passwordvali.sh 
+
+Enter a password : P0D@M1r@123
+Strong Password.
+-----------------------------------------
+Q) write a shell script to input element into the array
+
+#!/bin/bash
+
+read -p "Enter the array size : " s
+
+array=()
+for((i=0;i<s;i++))
+do
+        read -p "Enter the array element $((i + 1)) : " element
+        array+=("$element")
+done
+
+for((i=0;i<s;i++))
+do
+        echo -n "${array[i]}  "
+done
+
+echo ""
+
+
+
+[mca@localhost 07-03-2025]$ vi input-arrry.sh
+[mca@localhost 07-03-2025]$ chmod +x input-arrry.sh 
+[mca@localhost 07-03-2025]$ ./input-arrry.sh 
+Enter the array size : 5
+Enter the array element 1 : 6
+Enter the array element 2 : 5
+Enter the array element 3 : 4
+Enter the array element 4 : 2
+Enter the array element 5 : 1

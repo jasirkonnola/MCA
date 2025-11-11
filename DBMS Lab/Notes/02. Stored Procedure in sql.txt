@@ -1,0 +1,195 @@
+16-04-2025
+-----------
+
+
+stored proceddure in mysql
+1)Procedure
+2)Function
+3)Trigger
+4)cursors
+
+1))
+function
+select * from employee;
+create procedure <procedure name> 
+//begin
+  SQL statement;
+//end
+
+Syntax :-
+
+SELECT * FROM books;
+DELIMITER //
+   CREATE PROCEDURE listbooks()              ------------------> Procedure Header
+BEGIN                                            --+
+    SELECT * FROM books;                           |-----------> Procedure Body
+END //                                           --+
+DELIMITER;
+
+To Call the Procedure
+CALL <procedure name>;
+eg:- 
+  CALL listbooks;
+
+pronged procedure
+=================
+
+IN 
+OUT
+INOUT
+=========================================================
+IN Parameter
+-------------
+DELIMITER //
+    CREATE PROCEDURE listbookswithaccno(IN acc_no INT)
+BEGIN
+    SELECT * FROM books WHERE accno =
+END //
+DELIMITER ;
+CALL listbookswithaccno(10);
++-------+--------+-----------+-------+---------+--------------+-------------+
+| accno | title  | author    | price | type    | availability | publisherid |
++-------+--------+-----------+-------+---------+--------------+-------------+
+|    10 | Bleach | Tite Kubo | 49.99 | lending | no           |           4 |
++-------+--------+-----------+-------+---------+--------------+-------------+
+
+===========================================================
+OUT Parameter
+-------------
+SELECT name from books WHERE  accno = 10;
+------------------------------------------
+DELIMITER //
+CREATE PROCEDURE Printbookname(OUT bname VARCHAR(100))
+BEGIN
+SELECT title INTO bname FROM books WHERE accno = 10;
+END //
+DELIMITER ;
+CALL Printbookname(@bname) ; SELECT @bname AS bookname;
+Query OK, 1 row affected (0.01 sec)
+
++----------+
+| bookname |
++----------+
+| Bleach   |
++----------+
+============================================================
+INOUT Parameter
+---------------
+DELIMITER //
+CREATE PROCEDURE listbooknamewithaccno(INOUT val VARCHAR(100))
+BEGIN
+SELECT title INTO val FROM books WHERE accno = val; 
+END //
+DELIMITER ;
+SEt @val = '6';
+CALL listbooknamewithaccno(@val);
+SELECT @val ;
+
++-----------------------------+
+| @val                        |
++-----------------------------+
+| The Adventure of Tom Sawyer |
++-----------------------------+
+============================================================
+To View Procedure in the 
+SHOW PROCEDURE STATUS WHERE DB = '24mca23';
+=============================================================
+
+2))
+
+Stored Functions
+----------------
+
+Syntax:-
+
+DELIMITER //
+CREATE FUNCTION <function_name> (Para1 INT, para2 VARCHAR(100) ,.....)
+RETURNS <data_type>
+{NO SQL | READS SQL DATA | DETERMINISTIC }
+BEGIN
+DECLARE <Var_name> <data_type>;
+-- SQL statements
+RETURNS <Var_name>;
+END //   
+DELIMITER ;
+
+eg:-
+
+DELIMITER //
+CREATE FUNCTION listbook()
+RETURNS VARCHAR(100)
+READS SQL DATA
+BEGIN
+DECLARE bname VARCHAR(100);
+SELECT title INTO bname WHERE accno =1 ;
+RETURN bname;
+END //
+DELIMITER ;
+==============================================================================
+30-04-2025
+----------
+3)) Trigger
+
+Event:-
+1. Insert
+2. Update
+3. Delete
+
+action
+--> Before
+--> After
+
+before insert 
+after insert
+before update
+after update
+
+
+CREATE TRIGGER trigger_name
+<AFTER/BEFORE> <INSERT/UPDATE/DELETE> ON table_name
+ 
+BEGIN
+    -- Your instructions here
+END;
+
+
+operators that are used inside the event
+-> NEW
+-> OLD
+
+CREATE TRIGGER checkprice 
+BEFORE UPDATE ON books 
+FOR EACH ROW 
+BEGIN
+    IF NEW.price > 1000 THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Price cannot exceed 1000';
+    END IF;
+END;
+
+?)create a function to display the price of a book
+
+DELIMITER //
+
+CREATE FUNCTION priceofbook(accid INT) 
+RETURNS FLOAT(6,2) 
+DETERMINISTIC 
+RETURN(SELECT price FROM books WHERE accno = accid)
+
+//
+DELIMITER ;
+
+?)create a function to calculate and returns the total fine amount
+
+CREATE FUNCTION calculateprice() 
+RETURNS INT
+DETERMINISTIC 
+FOR EACH ROW
+BEGIN
+DECLARE hprice 
+
+//
+create a trigger to set availablitiy to NO a book is issued
+
+
+

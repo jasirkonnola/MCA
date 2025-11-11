@@ -1,0 +1,63 @@
+-- 
+-- Roll No: 23
+-- Name:jasir hassan
+-- Program: 
+-- 
+
+
+--
+-- Table structure for table departments
+--
+
+-- ---------create/alter statement commands----------- # This line may be removed in the actual file
+create table departments (dno int primary key,dname varchar(50) not null);
+
+
+--
+-- Table structure for table bookissues
+--
+
+-- ---------create/alter statement commands----------- # This line may be removed in the actual file
+create bookissues (bookid int,studentid int,issue_date date,return_date date,fine decimal(5,2) default 0.00);
+
+
+--
+-- Table structure for table students
+--
+
+-- ---------create/alter statement commands----------- # This line may be removed in the actual file
+alter table students drop column course;
+alter table students add column dno int;
+alter table students add constraint students_fk_dno foregin key (dno) references departments(dno);
+
+--
+-- Table structure for table bookissues
+--
+
+-- ---------create/alter statement commands----------- # This line may be removed in the actual file
+alter table bookissues add constraint primary key (bookid, studentid);
+alter table bookissues add constraint bookissues_fk_bookid foregin key (bookid) references books(bookid);
+alter table bookissues add constraint bookissues_fk_studentid foregin key (studentid) references students(studentid);
+
+--
+-- Dumping data for table departments
+--
+
+-- --------insert/update statement commands----------- # This line may be removed in the actcual file
+
+
+
+--
+-- Dumping data for table students
+--
+
+-- --------insert/update statement commands----------- # This line may be removed in the actcual file
+insert into students values(101, 'Midhun K',' MCA', 22),(102, 'Ann Mariya',' MCA', 30),(103,' Sidharth M',' MCA', 21);
+
+
+--
+-- SQl Query Statements
+--
+
+-- -----SQL query statments preceeded by the its question-------- # This line may be removed in the actual file
+-- -----Question number should be commented---------------#This line may be removed in the actual file
